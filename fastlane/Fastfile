@@ -1,0 +1,51 @@
+
+default_platform(:ios)
+
+platform :ios do
+  
+  lane :register_app do 
+    produce(
+      username: "phongvhd93@gmail.com",
+      app_identifier: "com.phong.vhd.devops.example",
+      app_name: "PhongVHD DevOps Example",
+      team_name: "Phong Vo",
+      itc_team_name: "Phong Vo"
+    )
+    
+  end 
+
+  # lane :get_dev_certs do
+  #   cert(development: true)
+  #   sigh(development: true)
+  # end
+  
+  lane :sync_all_development do
+    match(type: "development")
+  end 
+
+  lane :register_new_device do
+    device_name = promt(text: "Enter the device name: ")
+    device_udid = promt(text: "Enter the device's udid: ")
+    device_hash = {}
+    device_hast[device_name] = device_udid
+    register_devices(devices: device_hash)
+
+    sync_all_development
+  end
+
+  lane :sync_all_devices do 
+    register_devices(
+      devices_file: "fastlane/DeviceList"
+    )
+  end 
+
+
+  lane :sandbox do 
+    gym(
+      scheme: "ExampleApp",
+      output_directory: "build_AdHoc",
+      build_method: "ad-hoc"
+    )
+  end 
+end
+
