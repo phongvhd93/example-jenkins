@@ -6,8 +6,8 @@ platform :ios do
   lane :register_app do 
     produce(
       username: "phongvhd93@gmail.com",
-      app_identifier: "com.phong.vhd.devops.example",
-      app_name: "PhongVHD DevOps Example",
+      app_identifier: "com.phong.vhd.bitrise",
+      app_name: "Phong Example",
       team_name: "Phong Vo",
       itc_team_name: "Phong Vo"
     )
@@ -29,7 +29,6 @@ platform :ios do
     device_hash = {}
     device_hast[device_name] = device_udid
     register_devices(devices: device_hash)
-
     sync_all_development
   end
 
@@ -39,7 +38,42 @@ platform :ios do
     )
   end 
 
+  lane :sync_signing_assets do |options|
+    sync_all_devices
+    selectedType = options[:type]
+    match(type: selectedType)
+  end
 
+  lane :sync_adhoc do
+    sync_signing_assets(type: "adhoc")
+  end
+
+  lane :sync_app_store do
+    sync_signing_assets(type: "appstore")
+  end
+  
+
+  lane :get_signing_assets do |options|
+    selectedType = options[:type]
+    match(type: selectedType, readonly: true)
+  end 
+
+  lane :build_appstore do
+    get_signing_assets(type: "appstore")
+    gym(
+    output_directory: "build_Appstore",
+    export_method: "app-store"
+    )
+  end
+  
+  lane :build_adhoc do
+    get_signing_assets(type: "adhoc")
+    gym(
+    output_directory: "build_Adhoc",
+    export_method: "ad-hoc"
+    )
+  end
+  
   lane :sandbox do 
     gym(
       scheme: "ExampleApp",
@@ -48,4 +82,3 @@ platform :ios do
     )
   end 
 end
-
