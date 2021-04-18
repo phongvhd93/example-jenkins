@@ -15,18 +15,7 @@ if(env.BRANCH_NAME == "master") {
 }
 
 pipeline {
-  // agent {  label 'macbook' }
-
   agent any
-
-  environment {
-        // Fastlane Environment Variables
-        // PATH = "$HOME/.rvm/gems/ruby-2.7.2/bin" +
-        //         "$HOME/.rvm/rubies/ruby-2.7.2/bin:" +
-        //         "$HOME/.rvm/gems/ruby-2.7.2@global/bin:" +
-        //         "/usr/local/bin:" +
-        //         "$PATH"
-    }
 
   triggers {
     pollSCM ignorePostCommitHooks: true, scmpoll_spec: pollSpec
@@ -45,12 +34,6 @@ pipeline {
             currentBuild.result = "NOT_BUILT"
           }
         }
-      }
-    }
-
-    stage('Clean up gems') {
-      steps {
-        sh "gem cleanup"
       }
     }
 

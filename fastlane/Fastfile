@@ -68,8 +68,8 @@ platform :ios do
   end
   
   lane :build_adhoc do
-    # get_signing_assets(type: "adhoc")
-    sync_adhoc
+    get_signing_assets(type: "adhoc")
+    # sync_adhoc
     gym(
       scheme: "ExampleApp",
       output_directory: "build_Adhoc",
