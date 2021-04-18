@@ -17,6 +17,15 @@ if(env.BRANCH_NAME == "master") {
 pipeline {
   agent any
 
+  environment {
+        // Fastlane Environment Variables
+        PATH = "$HOME/.rvm/gems/ruby-2.7.2/bin" +
+                "$HOME/.rvm/rubies/ruby-2.7.2/bin:" +
+                "$HOME/.rvm/gems/ruby-2.7.2@global/bin:" +
+                "/usr/local/bin:" +
+                "$PATH"
+    }
+
   triggers {
     pollSCM ignorePostCommitHooks: true, scmpoll_spec: pollSpec
   }
