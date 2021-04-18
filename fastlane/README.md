@@ -21,11 +21,6 @@ or alternatively using `brew install fastlane`
 fastlane ios register_app
 ```
 
-### ios sync_all_development
-```
-fastlane ios sync_all_development
-```
-
 ### ios register_new_device
 ```
 fastlane ios register_new_device
@@ -56,6 +51,11 @@ fastlane ios sync_app_store
 fastlane ios get_signing_assets
 ```
 
+### ios get_dev_cert
+```
+fastlane ios get_dev_cert
+```
+
 ### ios build_appstore
 ```
 fastlane ios build_appstore
@@ -69,6 +69,11 @@ fastlane ios build_adhoc
 ### ios sandbox
 ```
 fastlane ios sandbox
+```
+
+### ios test
+```
+fastlane ios test
 ```
 
 

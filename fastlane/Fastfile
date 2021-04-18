@@ -18,10 +18,6 @@ platform :ios do
   #   cert(development: true)
   #   sigh(development: true)
   # end
-  
-  lane :sync_all_development do
-    match(type: "development")
-  end 
 
   lane :register_new_device do
     device_name = promt(text: "Enter the device name: ")
@@ -58,19 +54,26 @@ platform :ios do
     match(type: selectedType, readonly: true)
   end 
 
+  lane :get_dev_cert do |options|
+    get_signing_assets(type: "development")
+  end
+
   lane :build_appstore do
     get_signing_assets(type: "appstore")
     gym(
-    output_directory: "build_Appstore",
-    export_method: "app-store"
+      scheme: "ExampleApp",
+      output_directory: "build_Appstore",
+      export_method: "app-store"
     )
   end
   
   lane :build_adhoc do
-    get_signing_assets(type: "adhoc")
+    # get_signing_assets(type: "adhoc")
+    sync_adhoc
     gym(
-    output_directory: "build_Adhoc",
-    export_method: "ad-hoc"
+      scheme: "ExampleApp",
+      output_directory: "build_Adhoc",
+      export_method: "ad-hoc"
     )
   end
   
@@ -81,4 +84,8 @@ platform :ios do
       build_method: "ad-hoc"
     )
   end 
+
+  lane :test do 
+    get_signing_assets(type: "adhoc")
+  end
 end
